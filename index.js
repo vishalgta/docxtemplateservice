@@ -1,5 +1,6 @@
 /**
- * Created by amado on 1/5/17.
+ * @author Amado Martinez <amado@projectivemotion.com
+ * @license MIT
  */
 
 var fs  =   require('fs');
