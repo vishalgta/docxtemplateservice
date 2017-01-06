@@ -13,17 +13,27 @@ var upload = multer({ dest: 'uploads/' });
 var app = express();
 
 app.get('/', home);
+app.use(express.static('www'));
 
-app.post('/', upload.fields([{ name: 'file', maxCount: 1}]), function (req, res){
+app.post('/', upload.fields([{ name: 'docxfile', maxCount: 1}, { name: 'jsondata', maxCount: 1}]), function (req, res){
     //console.log(req);
 
-    if(!req.files['file'] || !req.body['jsondata']){
+    var json    =   null;
+    if(req.body['jsondata'])
+    {
+       json =  JSON.parse(req.body['jsondata'].trim());
+    }else if(req.files['jsondata']){
+        json = JSON.parse(fs.readFileSync(req.files['jsondata'][0].path));   // @todo async
+    }else{
+        // error..
+    }
+
+    if(!req.files['docxfile'] || !json){
         res.redirect('/');
         return;
     }
 
-    var docx_fileinfo   =   req.files['file'][0];
-    var json    =   JSON.parse(req.body['jsondata'].trim());
+    var docx_fileinfo   =   req.files['docxfile'][0];
 
     console.log(docx_fileinfo, json );
     // @todo check stuff..

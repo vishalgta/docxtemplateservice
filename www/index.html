@@ -2,20 +2,128 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>Welcome to docx document generator.</title><!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <style>
+        /* Sticky footer styles
+        -------------------------------------------------- */
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+        body {
+            /* Margin bottom by footer height */
+            margin-bottom: 60px;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            background-color: #f5f5f5;
+        }
+
+
+        /* Custom page CSS
+        -------------------------------------------------- */
+        /* Not required for template or sticky footer method. */
+
+        /*.container {*/
+            /*width: auto;*/
+            /*max-width: 680px;*/
+            /*padding: 0 15px;*/
+        /*}*/
+        .container .text-muted {
+            margin: 20px 0;
+        }
+
+    </style>
 </head>
 <body>
 
-<h1>Proof of Concept</h1>
-<form action="/" method="POST" enctype="multipart/form-data">
-    Choose docx:
-    <input type="file" name="file">
-    <button type="submit">Click</button>
-    <div>
-        <textarea name="jsondata" rows="30" cols="100">
-            { "name" : "from json!" }
-        </textarea>
+<!-- Begin page content -->
+<div class="container">
+    <div class="page-header">
+        <h1>Docx Document Generator</h1>
     </div>
-</form>
+    <p class="lead">Generate a word document using custom values.</p>
+    <div class="row">
+        <div class="col-md-4">
+            <h3>How to use</h3>
+            <p>Simply send a post request (multipart/form-data) to <strong><script>
+                document.write(location.href);</script></strong>
+                <noscript>This page's url.</noscript>
+            </p>
+
+            <h3>Curl Example</h3>
+            <code>curl -o parsed.docx --form docxfile=@template.docx --form jsondata='{ "title": "hello from curl!" }' http://localhost:3000/</code>
+
+            <h3>Curl Example 2</h3>
+            <code>curl -o parsed.docx --form docxfile=@template.docx --form jsondata=@example.json http://localhost:3000/</code>
+        </div>
+        <div class="col-md-8">
+            <form action="/" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">
+                        Docx File
+                    </label>
+
+                    <input type="file" name="docxfile" id="file" />
+                </div>
+                <div class="form-group">
+                    <label for="jsondata">Json Template Data</label>
+                    <textarea class="form-control" name="jsondata" rows="16" id="jsondata">{
+    "title": "Partnership Agreement",
+    "person_name": "Adam Smith",
+    "person_address": "101 Smith Lane",
+    "state_or_province": "state",
+    "state_or_province_value": "Texas",
+    "partner_name": "John Doe",
+    "partner_address": "101 Doe Lane",
+    "state_or_province_partner_value": "Oklahoma",
+    "state_or_province_partner": "state",
+    "date": "01/01/2027"
+}</textarea>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Generate Document</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Php example</h3>
+            <pre>
+                $post = array('docxfile' => '@/path/to/template.docx','jsondata'=> '@/path/to/values.json');
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL,$target_url);
+                curl_setopt($ch, CURLOPT_POST,1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+                $result=curl_exec ($ch);
+                curl_close ($ch);
+            </pre>
+        </div>
+        <div class="col-md-12">
+            <h2>What does this page do?</h2>
+            <p>Turn <img src="template.png" /></p>
+            <p>Into <img src="output.png" /></p>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Created by <a href="http://amadomartinez.mx">Amado Martinez</a> </p>
+    </div>
+</footer>
+
 </body>
 </html>
