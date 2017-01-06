@@ -47,7 +47,8 @@ app.post('/', upload.fields([{ name: 'docxfile', maxCount: 1}, { name: 'jsondata
 });
 
 app.listen(3000, function (){
-    console.log("listeining on 3000 " + `${process.cwd()}`);
+    console.log("listeining on port 3000 uploads directory is: " + `${process.cwd()}/uploads`);
+    console.log('Open http://localhost:3000/ ');
 });
 
 function onUploadGenerateBuffer(content, docData)
