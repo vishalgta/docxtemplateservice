@@ -6,6 +6,7 @@
 
 * Open web browser to http://localhost:3000/
    - Upload docx and json files.
+   
 * Use your own script to post to http://localhost:3000/
 
 ```
